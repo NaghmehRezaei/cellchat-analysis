@@ -1,23 +1,38 @@
-# Visualization of CellChat comparison results
+# Visualization of Cell–Cell Communication Comparison Results
 
 library(CellChat)
 
-# Load merged object
+############################################################
+# 📂 Load merged CellChat object
+############################################################
+
 cellchat_merged <- readRDS("results/cellchat_merged.rds")
 
-# Create plots folder if not exists
+############################################################
+# 📁 Create output folder if it does not exist
+############################################################
+
 dir.create("results/plots", recursive = TRUE, showWarnings = FALSE)
 
 ############################################################
-# 1️⃣ Interaction count vs strength
+# 1️⃣ Compare total interactions (count vs strength)
 ############################################################
 
-png("results/plots/01_interaction_compare.png", width = 1200, height = 800)
+png("results/plots/01_interaction_count_vs_strength.png",
+    width = 1200, height = 800)
 
-gg1 <- compareInteractions(cellchat_merged, show.legend = FALSE)
-gg2 <- compareInteractions(cellchat_merged, show.legend = FALSE, measure = "weight")
+gg_count <- compareInteractions(
+  cellchat_merged,
+  show.legend = FALSE
+)
 
-print(gg1 + gg2)
+gg_strength <- compareInteractions(
+  cellchat_merged,
+  show.legend = FALSE,
+  measure = "weight"
+)
+
+print(gg_count + gg_strength)
 
 dev.off()
 
@@ -25,7 +40,8 @@ dev.off()
 # 2️⃣ Differential interaction network
 ############################################################
 
-png("results/plots/02_diff_interactions.png", width = 800, height = 800)
+png("results/plots/02_diff_interactions_strength.png",
+    width = 800, height = 800)
 
 netVisual_diffInteraction(
   cellchat_merged,
@@ -35,10 +51,11 @@ netVisual_diffInteraction(
 dev.off()
 
 ############################################################
-# 3️⃣ Pathway comparison
+# 3️⃣ Pathway-level comparison
 ############################################################
 
-png("results/plots/03_rankNet.png", width = 1000, height = 1200)
+png("results/plots/03_pathway_comparison.png",
+    width = 1000, height = 1200)
 
 rankNet(
   cellchat_merged,
