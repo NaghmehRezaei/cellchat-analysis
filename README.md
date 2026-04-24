@@ -1,104 +1,194 @@
 # CellChat Analysis: sTREM2 vs EGFP
 
 ## 🧠 Project Overview
-This project analyzes how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and CellChat.
+This project investigates how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and the **CellChat** framework.
+
+The goal is to understand how signaling networks, pathways, and ligand–receptor interactions are rewired between:
+- **Control (EGFP)**
+- **sTREM2 overexpression**
 
 ---
 
-## 🔬 Biological Question
-How does sTREM2 change:
-- Intercellular communication strength?
-- Network structure (who talks to whom)?
-- Key signaling pathways and ligand–receptor interactions?
+## 🔬 Biological Questions
+- Does sTREM2 change overall communication strength?
+- Which cell types are most affected?
+- Which signaling pathways are altered?
+- Are changes due to intensity or **network rewiring**?
 
 ---
 
-## ⚙️ Workflow
-1. Build CellChat objects (Control vs sTREM2)
-2. Infer communication networks
-3. Compare interaction number and strength
-4. Identify pathway-level differences
-5. Detect network rewiring using embedding
-6. Identify condition-specific signaling pathways
+## ⚙️ Analysis Workflow
+1. Build CellChat objects per condition  
+2. Infer communication probabilities  
+3. Compare interaction number and strength  
+4. Identify differential interactions  
+5. Analyze pathway-level changes  
+6. Perform manifold learning (embedding)  
+7. Detect condition-specific signaling  
+8. Investigate ligand–receptor mechanisms  
 
 ---
 
-## 📊 Key Results
-
-### 1️⃣ Global Communication Changes
-![Interaction](results/plots/01_interaction_count_vs_strength.png)
-
-sTREM2 shows a clear reduction in overall communication strength compared to control.
+# 📊 Results
 
 ---
 
-### 2️⃣ Differential Interaction Network
-![Diff Network](results/plots/03b_diff_interactions_strength.png)
+## 1️⃣ Global Communication Changes
+![Interaction](Results/plots/01_interaction_count_vs_strength.png)
 
-Cell–cell communication is broadly reduced and reorganized in sTREM2, indicating global network suppression.
-
----
-
-### 3️⃣ Systematic Interaction Changes (Heatmap)
-![Heatmap](results/plots/04_differential_heatmaps.png)
-
-The heatmap shows which specific cell-type interactions increase or decrease, highlighting widespread reduction across many pairs.
+sTREM2 shows a strong **reduction in both interaction number and overall signaling strength**, indicating global suppression of communication.
 
 ---
 
-### 4️⃣ Pathway-Level Changes
-![Pathway](results/plots/05_rankNet_stacked.png)
+## 2️⃣ Interaction Network per Condition
 
-Many signaling pathways shift toward control dominance, indicating reduced pathway activity in sTREM2.
+### Control Network
+![Control Circle](Results/plots/02_circle_control.png)
 
----
+### sTREM2 Network
+![sTREM2 Circle](Results/plots/02_circle_strem2.png)
 
-### 5️⃣ Network Rewiring (Most Important Result)
-![Embedding](results/plots/14_pairwise_embedding.png)
-
-Key pathways (such as ECM, SPP1, and WNT) change their cellular communication patterns, showing true **network rewiring**, not just changes in intensity.
-
----
-
-### 6️⃣ Condition-Specific Pathways
-![RankSimilarity](results/plots/16_rankSimilarity.png)
-
-Top-ranked pathways show the strongest differences between control and sTREM2, representing the most biologically altered signaling programs.
+Each node represents a cell type, and edges represent communication.  
+The sTREM2 network shows **reduced connectivity and fewer strong interactions**.
 
 ---
 
-### 7️⃣ Example Mechanistic Interaction (HSC → Hepatocyte)
-![Chord](results/plots/13_chord_HSC_Hepatocyte.png)
+## 3️⃣ Differential Interaction Networks
 
-Detailed ligand–receptor analysis reveals how specific signaling interactions between HSC and hepatocytes are altered in sTREM2.
+### Interaction Count Changes
+![Diff Count](Results/plots/03a_diff_interactions_count.png)
 
----
+### Interaction Strength Changes
+![Diff Strength](Results/plots/03b_diff_interactions_strength.png)
 
-## 🧬 Key Biological Insights
-
-- Global reduction in cell–cell communication in sTREM2  
-- Loss of signaling diversity across pathways  
-- Shift toward **HSC-driven signaling dominance**  
-- Emergence of **SPP1-related signaling**  
-- Evidence of **network rewiring**, not just up/down regulation  
+Blue edges indicate **lost interactions in sTREM2**, showing widespread reduction across many cell-type pairs.
 
 ---
 
-## 📁 Repository Structure
+## 4️⃣ Systematic Interaction Changes (Heatmaps)
+![Heatmaps](Results/plots/04_differential_heatmaps.png)
 
-- `scripts/` → analysis pipeline  
-- `results/plots/` → visualization outputs  
-- `results/` → processed CellChat objects  
+These heatmaps summarize interaction changes across all sender–receiver pairs.  
+Most cell types show **reduced outgoing and incoming signaling** in sTREM2.
 
 ---
 
-## ⚠️ Notes
+## 5️⃣ Pathway-Level Communication
 
-- Raw data is not included in this repository  
-- Analysis uses `CellChatDB.mouse`  
+### Relative Information Flow
+![RankNet Stacked](Results/plots/05_rankNet_stacked.png)
+
+Most pathways are dominated by control, indicating reduced pathway activity in sTREM2.
+
+### Absolute Information Flow
+![RankNet Side](Results/plots/06_rankNet_sidebyside.png)
+
+Confirms that pathway activity is globally lower in sTREM2, not just relatively shifted.
+
+---
+
+## 6️⃣ Cell-Type Specific Signaling Changes
+
+### Outgoing Signaling (Control)
+![Outgoing Control](Results/plots/07_outgoing_heatmap_Control.png)
+
+### Outgoing Signaling (sTREM2)
+![Outgoing sTREM2](Results/plots/08_outgoing_heatmap_sTREM2.png)
+
+### Incoming Signaling (Control)
+![Incoming Control](Results/plots/09_incoming_heatmap_Control.png)
+
+### Incoming Signaling (sTREM2)
+![Incoming sTREM2](Results/plots/10_incoming_heatmap_sTREM2.png)
+
+These plots show how **specific cell types change their signaling roles**.  
+sTREM2 shifts communication toward fewer dominant pathways.
+
+---
+
+## 7️⃣ Key Interaction Examples
+
+### HSC → All Targets
+![HSC](Results/plots/11_HSC_to_all.png)
+
+### LSEC → Targets
+![LSEC](Results/plots/12_LSEC_to_targets.png)
+
+### Hepatocyte → Endothelial
+![Hep](Results/plots/13_Hep_to_endothelial.png)
+
+### Cholangiocyte → Immune
+![Chol](Results/plots/14_Chol_to_immune.png)
+
+These highlight **specific communication axes affected by sTREM2**.
+
+---
+
+## 8️⃣ Ligand–Receptor Mechanisms
+
+### HSC → Hepatocyte (Control)
+![Chord Control](Results/plots/12_chord_HSC_Hepatocyte_Control.png)
+
+### HSC → Hepatocyte (sTREM2)
+![Chord sTREM2](Results/plots/13_chord_HSC_Hepatocyte_sTREM2.png)
+
+### Cholangiocyte → Kupffer (Control)
+![Chord Chol Control](Results/plots/14_chord_Chol_Kupffer_Control.png)
+
+### Cholangiocyte → Kupffer (sTREM2)
+![Chord Chol sTREM2](Results/plots/15_chord_Chol_Kupffer_sTREM2.png)
+
+Chord diagrams reveal **specific ligand–receptor interactions driving communication changes**.
+
+---
+
+## 9️⃣ Network Rewiring (Most Important Result)
+
+### Pathway Embedding
+![Embedding](Results/plots/14_pairwise_embedding.png)
+
+### Zoomed View
+![Embedding Zoom](Results/plots/15_pairwise_embedding_zoom.png)
+
+Pathways shift position between conditions, showing that:
+
+👉 sTREM2 causes **true network rewiring**, not just intensity changes.
+
+---
+
+## 🔟 Condition-Specific Pathways
+![RankSimilarity](Results/plots/16_rankSimilarity.png)
+
+Top-ranked pathways show the strongest differences and represent the **most biologically relevant changes**.
+
+---
+
+# 🧬 Key Biological Insights
+
+- Global reduction in signaling in sTREM2  
+- Loss of communication diversity  
+- Increased dominance of specific pathways  
+- Strong involvement of **HSC-driven signaling**  
+- Emergence of **SPP1 / ECM-related pathways**  
+- Clear evidence of **network rewiring**  
+
+---
+
+# 📁 Repository Structure
+
+- `scripts/` → full analysis pipeline  
+- `Results/plots/` → visualization outputs  
+- `Results/` → processed objects  
+
+---
+
+# ⚠️ Notes
+
+- Raw data not included  
+- Mouse database used (`CellChatDB.mouse`)  
 - Sequential execution used to avoid memory issues  
 
 ---
 
-## 👩‍🔬 Author
+# 👩‍🔬 Author
 Nelly (nrezaei)
