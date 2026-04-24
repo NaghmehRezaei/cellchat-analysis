@@ -3,18 +3,28 @@
 library(CellChat)
 library(future)
 
+############################################################
+# 🔧 Setup (safe execution for large objects)
+############################################################
+
 plan(sequential)
 options(future.globals.maxSize = +Inf)
 options(future.rng.onMisuse = "ignore")
 
-# Load merged object
+############################################################
+# 📂 Load merged CellChat object
+############################################################
+
 cellchat_merged <- readRDS("results/cellchat_merged.rds")
 
-# Create plots folder
+############################################################
+# 📁 Create output directory if needed
+############################################################
+
 dir.create("results/plots", recursive = TRUE, showWarnings = FALSE)
 
 ############################################################
-# 1️⃣ Compute pathway similarity across conditions
+# 1️⃣ Compute pathway similarity (functional)
 ############################################################
 
 cellchat_merged <- computeNetSimilarityPairwise(
@@ -23,7 +33,7 @@ cellchat_merged <- computeNetSimilarityPairwise(
 )
 
 ############################################################
-# 2️⃣ Embedding
+# 2️⃣ Perform low-dimensional embedding
 ############################################################
 
 cellchat_merged <- netEmbedding(
@@ -32,7 +42,7 @@ cellchat_merged <- netEmbedding(
 )
 
 ############################################################
-# 3️⃣ Clustering pathways
+# 3️⃣ Cluster signaling pathways
 ############################################################
 
 set.seed(123)
@@ -43,10 +53,11 @@ cellchat_merged <- netClustering(
 )
 
 ############################################################
-# 4️⃣ Plot embedding
+# 4️⃣ Visualize pathway embedding
 ############################################################
 
-png("results/plots/04_embedding.png", width = 1200, height = 1000)
+png("results/plots/04_pathway_embedding.png",
+    width = 1200, height = 1000)
 
 netVisual_embeddingPairwise(
   cellchat_merged,
@@ -57,10 +68,11 @@ netVisual_embeddingPairwise(
 dev.off()
 
 ############################################################
-# 5️⃣ Zoomed embedding
+# 5️⃣ Zoomed-in embedding view
 ############################################################
 
-png("results/plots/05_embedding_zoom.png", width = 1200, height = 1000)
+png("results/plots/05_pathway_embedding_zoom.png",
+    width = 1200, height = 1000)
 
 netVisual_embeddingPairwiseZoomIn(
   cellchat_merged,
@@ -71,10 +83,11 @@ netVisual_embeddingPairwiseZoomIn(
 dev.off()
 
 ############################################################
-# 6️⃣ Rank condition-specific pathways
+# 6️⃣ Identify condition-specific pathways
 ############################################################
 
-png("results/plots/06_rankSimilarity.png", width = 900, height = 1100)
+png("results/plots/06_pathway_rankSimilarity.png",
+    width = 900, height = 1100)
 
 rankSimilarity(
   cellchat_merged,
@@ -83,5 +96,11 @@ rankSimilarity(
 
 dev.off()
 
-# Save updated object
-saveRDS(cellchat_merged, "results/cellchat_merged_with_pathways.rds")
+############################################################
+# 💾 Save updated object
+############################################################
+
+saveRDS(
+  cellchat_merged,
+  "results/cellchat_merged_with_pathways.rds"
+)
