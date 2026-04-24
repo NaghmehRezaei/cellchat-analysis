@@ -1,31 +1,29 @@
 # CellChat Analysis: sTREM2 vs EGFP
 
 ## 🧠 Project Overview
-This project investigates how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and the **CellChat** framework.
+This project investigates how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and CellChat.
 
-The goal is to understand how signaling networks, pathways, and ligand–receptor interactions are rewired between:
+We compare:
 - **Control (EGFP)**
 - **sTREM2 overexpression**
 
 ---
 
 ## 🔬 Biological Questions
-- Does sTREM2 change overall communication strength?
+- Does sTREM2 reduce communication?
 - Which cell types are most affected?
-- Which signaling pathways are altered?
-- Are changes due to intensity or **network rewiring**?
+- Which pathways change?
+- Is this just intensity change or real **network rewiring**?
 
 ---
 
-## ⚙️ Analysis Workflow
-1. Build CellChat objects per condition  
-2. Infer communication probabilities  
-3. Compare interaction number and strength  
-4. Identify differential interactions  
-5. Analyze pathway-level changes  
-6. Perform manifold learning (embedding)  
-7. Detect condition-specific signaling  
-8. Investigate ligand–receptor mechanisms  
+## ⚙️ Workflow
+1. Build CellChat objects  
+2. Infer communication networks  
+3. Compare interaction number & strength  
+4. Identify pathway changes  
+5. Detect network rewiring  
+6. Analyze ligand–receptor interactions  
 
 ---
 
@@ -36,79 +34,74 @@ The goal is to understand how signaling networks, pathways, and ligand–recepto
 ## 1️⃣ Global Communication Changes
 ![Interaction](Results/plots/01_interaction_count_vs_strength.png)
 
-sTREM2 shows a strong **reduction in both interaction number and overall signaling strength**, indicating global suppression of communication.
+sTREM2 shows **reduced number and strength of interactions**, indicating global suppression.
 
 ---
 
-## 2️⃣ Interaction Network per Condition
+## 2️⃣ Interaction Networks
 
-### Control Network
-![Control Circle](Results/plots/02_circle_control.png)
+### Control
+![Control](Results/plots/02_circle_control.png)
 
-### sTREM2 Network
-![sTREM2 Circle](Results/plots/02_circle_strem2.png)
+### sTREM2
+![sTREM2](Results/plots/02_circle_strem2.png)
 
-Each node represents a cell type, and edges represent communication.  
-The sTREM2 network shows **reduced connectivity and fewer strong interactions**.
+The sTREM2 network shows **fewer and weaker connections**.
 
 ---
 
-## 3️⃣ Differential Interaction Networks
+## 3️⃣ Differential Interaction Changes
 
-### Interaction Count Changes
+### Count
 ![Diff Count](Results/plots/03a_diff_interactions_count.png)
 
-### Interaction Strength Changes
+### Strength
 ![Diff Strength](Results/plots/03b_diff_interactions_strength.png)
 
-Blue edges indicate **lost interactions in sTREM2**, showing widespread reduction across many cell-type pairs.
+Blue edges = **lost interactions in sTREM2** → widespread reduction.
 
 ---
 
-## 4️⃣ Systematic Interaction Changes (Heatmaps)
-![Heatmaps](Results/plots/04_differential_heatmaps.png)
+## 4️⃣ Heatmap of Interaction Changes
+![Heatmap](Results/plots/04_differential_heatmaps.png)
 
-These heatmaps summarize interaction changes across all sender–receiver pairs.  
-Most cell types show **reduced outgoing and incoming signaling** in sTREM2.
+Most cell-type pairs show **reduced communication**.
 
 ---
 
-## 5️⃣ Pathway-Level Communication
+## 5️⃣ Pathway-Level Changes
 
-### Relative Information Flow
+### Relative Activity
 ![RankNet Stacked](Results/plots/05_rankNet_stacked.png)
 
-Most pathways are dominated by control, indicating reduced pathway activity in sTREM2.
-
-### Absolute Information Flow
+### Absolute Activity
 ![RankNet Side](Results/plots/06_rankNet_sidebyside.png)
 
-Confirms that pathway activity is globally lower in sTREM2, not just relatively shifted.
+Pathways are **globally reduced in sTREM2**.
 
 ---
 
-## 6️⃣ Cell-Type Specific Signaling Changes
+## 6️⃣ Cell-Type Signaling Changes
 
-### Outgoing Signaling (Control)
-![Outgoing Control](Results/plots/07_outgoing_heatmap_Control.png)
+### Outgoing (Control)
+![Out Control](Results/plots/07_outgoing_heatmap_Control.png)
 
-### Outgoing Signaling (sTREM2)
-![Outgoing sTREM2](Results/plots/08_outgoing_heatmap_sTREM2.png)
+### Outgoing (sTREM2)
+![Out sTREM2](Results/plots/08_outgoing_heatmap_sTREM2.png)
 
-### Incoming Signaling (Control)
-![Incoming Control](Results/plots/09_incoming_heatmap_Control.png)
+### Incoming (Control)
+![In Control](Results/plots/09_incoming_heatmap_Control.png)
 
-### Incoming Signaling (sTREM2)
-![Incoming sTREM2](Results/plots/10_incoming_heatmap_sTREM2.png)
+### Incoming (sTREM2)
+![In sTREM2](Results/plots/10_incoming_heatmap_sTREM2.png)
 
-These plots show how **specific cell types change their signaling roles**.  
-sTREM2 shifts communication toward fewer dominant pathways.
+Cell types **lose signaling roles and become less active** in sTREM2.
 
 ---
 
 ## 7️⃣ Key Interaction Examples
 
-### HSC → All Targets
+### HSC → All
 ![HSC](Results/plots/11_HSC_to_all.png)
 
 ### LSEC → Targets
@@ -120,7 +113,7 @@ sTREM2 shifts communication toward fewer dominant pathways.
 ### Cholangiocyte → Immune
 ![Chol](Results/plots/14_Chol_to_immune.png)
 
-These highlight **specific communication axes affected by sTREM2**.
+These highlight **specific communication axes affected**.
 
 ---
 
@@ -138,55 +131,53 @@ These highlight **specific communication axes affected by sTREM2**.
 ### Cholangiocyte → Kupffer (sTREM2)
 ![Chord Chol sTREM2](Results/plots/15_chord_Chol_Kupffer_sTREM2.png)
 
-Chord diagrams reveal **specific ligand–receptor interactions driving communication changes**.
+These reveal **specific ligand–receptor changes** driving the phenotype.
 
 ---
 
-## 9️⃣ Network Rewiring (Most Important Result)
+## 9️⃣ Network Rewiring (Key Result)
 
-### Pathway Embedding
+### Embedding
 ![Embedding](Results/plots/14_pairwise_embedding.png)
 
-### Zoomed View
+### Zoom
 ![Embedding Zoom](Results/plots/15_pairwise_embedding_zoom.png)
 
-Pathways shift position between conditions, showing that:
-
-👉 sTREM2 causes **true network rewiring**, not just intensity changes.
+Pathways shift positions →  
+👉 sTREM2 causes **true network rewiring**, not just weaker signaling.
 
 ---
 
 ## 🔟 Condition-Specific Pathways
 ![RankSimilarity](Results/plots/16_rankSimilarity.png)
 
-Top-ranked pathways show the strongest differences and represent the **most biologically relevant changes**.
+Top pathways show the **strongest biological differences**.
 
 ---
 
 # 🧬 Key Biological Insights
 
-- Global reduction in signaling in sTREM2  
-- Loss of communication diversity  
-- Increased dominance of specific pathways  
-- Strong involvement of **HSC-driven signaling**  
-- Emergence of **SPP1 / ECM-related pathways**  
-- Clear evidence of **network rewiring**  
+- Global reduction in communication  
+- Loss of signaling diversity  
+- Strong shift in pathway usage  
+- Increased dominance of certain axes (e.g., ECM/SPP1)  
+- Evidence of **network rewiring**  
 
 ---
 
 # 📁 Repository Structure
 
-- `scripts/` → full analysis pipeline  
-- `Results/plots/` → visualization outputs  
-- `Results/` → processed objects  
+- `scripts/` → analysis code  
+- `Results/plots/` → figures  
+- `Results/` → processed outputs  
 
 ---
 
 # ⚠️ Notes
 
 - Raw data not included  
-- Mouse database used (`CellChatDB.mouse`)  
-- Sequential execution used to avoid memory issues  
+- Mouse CellChat database used  
+- Sequential processing due to memory constraints  
 
 ---
 
