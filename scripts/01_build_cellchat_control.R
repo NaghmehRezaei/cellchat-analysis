@@ -1,4 +1,4 @@
-# Build CellChat object for Control (EGFP)
+# Build CellChat object for Condition 1
 
 library(CellChat)
 library(Seurat)
@@ -12,23 +12,24 @@ seurat_obj <- readRDS("data/seurat_obj.rds")
 seurat_obj$samples <- factor(seurat_obj$Sample)
 seurat_obj <- subset(seurat_obj, subset = celltype != "Low_confidence")
 
-seurat_control <- subset(seurat_obj, subset = Group == "T2_EGFP6M")
-Idents(seurat_control) <- "celltype"
+# Subset Condition 1
+seurat_cond1 <- subset(seurat_obj, subset = Group == "Condition1")
+Idents(seurat_cond1) <- "celltype"
 
-cellchat_control <- createCellChat(
-  object = seurat_control,
+cellchat_cond1 <- createCellChat(
+  object = seurat_cond1,
   group.by = "celltype",
   assay = "RNA"
 )
 
-cellchat_control@DB <- CellChatDB.mouse
+cellchat_cond1@DB <- CellChatDB.mouse
 
-cellchat_control <- subsetData(cellchat_control)
-cellchat_control <- identifyOverExpressedGenes(cellchat_control)
-cellchat_control <- identifyOverExpressedInteractions(cellchat_control)
-cellchat_control <- computeCommunProb(cellchat_control)
-cellchat_control <- filterCommunication(cellchat_control)
-cellchat_control <- computeCommunProbPathway(cellchat_control)
-cellchat_control <- aggregateNet(cellchat_control)
+cellchat_cond1 <- subsetData(cellchat_cond1)
+cellchat_cond1 <- identifyOverExpressedGenes(cellchat_cond1)
+cellchat_cond1 <- identifyOverExpressedInteractions(cellchat_cond1)
+cellchat_cond1 <- computeCommunProb(cellchat_cond1)
+cellchat_cond1 <- filterCommunication(cellchat_cond1)
+cellchat_cond1 <- computeCommunProbPathway(cellchat_cond1)
+cellchat_cond1 <- aggregateNet(cellchat_cond1)
 
-saveRDS(cellchat_control, "results/cellchat_control.rds")
+saveRDS(cellchat_cond1, "results/cellchat_condition1.rds")
