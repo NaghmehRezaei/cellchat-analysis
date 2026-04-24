@@ -1,15 +1,15 @@
 # CellChat Analysis: sTREM2 vs EGFP
 
 ## 🧠 Project Overview
-This project investigates how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and CellChat.
+This project analyzes how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and CellChat.
 
 ---
 
 ## 🔬 Biological Question
 How does sTREM2 change:
-- Intercellular signaling strength?
-- Communication network structure?
-- Key ligand–receptor interactions?
+- Intercellular communication strength?
+- Network structure (who talks to whom)?
+- Key signaling pathways and ligand–receptor interactions?
 
 ---
 
@@ -17,71 +17,86 @@ How does sTREM2 change:
 1. Build CellChat objects (Control vs sTREM2)
 2. Infer communication networks
 3. Compare interaction number and strength
-4. Identify pathway-level changes
-5. Detect network rewiring (embedding)
-6. Analyze key ligand–receptor interactions
+4. Identify pathway-level differences
+5. Detect network rewiring using embedding
+6. Identify condition-specific signaling pathways
 
 ---
 
 ## 📊 Key Results
 
 ### 1️⃣ Global Communication Changes
-![Interaction](results/plots/01_interaction_compare.png)
+![Interaction](results/plots/01_interaction_count_vs_strength.png)
 
-sTREM2 shows reduced overall communication strength compared to control.
+sTREM2 shows a clear reduction in overall communication strength compared to control.
 
 ---
 
 ### 2️⃣ Differential Interaction Network
-![Diff Network](results/plots/02_diff_interactions.png)
+![Diff Network](results/plots/03b_diff_interactions_strength.png)
 
-Communication between cell types is broadly reduced and reorganized in sTREM2.
-
----
-
-### 3️⃣ Pathway-Level Changes
-![Pathway](results/plots/03_rankNet.png)
-
-Several signaling pathways show reduced activity in sTREM2.
+Cell–cell communication is broadly reduced and reorganized in sTREM2, indicating global network suppression.
 
 ---
 
-### 4️⃣ Network Rewiring (Most Important)
-![Embedding](results/plots/04_embedding.png)
+### 3️⃣ Systematic Interaction Changes (Heatmap)
+![Heatmap](results/plots/04_differential_heatmaps.png)
 
-Key pathways (ECM, SPP1, WNT) show rewiring — not just changes in strength.
+The heatmap shows which specific cell-type interactions increase or decrease, highlighting widespread reduction across many pairs.
 
 ---
 
-### 5️⃣ Condition-Specific Pathways
-![RankSimilarity](results/plots/06_rankSimilarity.png)
+### 4️⃣ Pathway-Level Changes
+![Pathway](results/plots/05_rankNet_stacked.png)
 
-Top pathways are strongly altered between conditions.
+Many signaling pathways shift toward control dominance, indicating reduced pathway activity in sTREM2.
+
+---
+
+### 5️⃣ Network Rewiring (Most Important Result)
+![Embedding](results/plots/14_pairwise_embedding.png)
+
+Key pathways (such as ECM, SPP1, and WNT) change their cellular communication patterns, showing true **network rewiring**, not just changes in intensity.
+
+---
+
+### 6️⃣ Condition-Specific Pathways
+![RankSimilarity](results/plots/16_rankSimilarity.png)
+
+Top-ranked pathways show the strongest differences between control and sTREM2, representing the most biologically altered signaling programs.
+
+---
+
+### 7️⃣ Example Mechanistic Interaction (HSC → Hepatocyte)
+![Chord](results/plots/13_chord_HSC_Hepatocyte.png)
+
+Detailed ligand–receptor analysis reveals how specific signaling interactions between HSC and hepatocytes are altered in sTREM2.
 
 ---
 
 ## 🧬 Key Biological Insights
 
-- Global reduction in signaling in sTREM2  
-- Loss of signaling diversity  
-- Shift toward **HSC-driven communication**  
-- Emergence of **SPP1-mediated signaling**  
-- Evidence of **network rewiring**
+- Global reduction in cell–cell communication in sTREM2  
+- Loss of signaling diversity across pathways  
+- Shift toward **HSC-driven signaling dominance**  
+- Emergence of **SPP1-related signaling**  
+- Evidence of **network rewiring**, not just up/down regulation  
 
 ---
 
 ## 📁 Repository Structure
 
 - `scripts/` → analysis pipeline  
-- `results/plots/` → figures  
-- `results/` → processed outputs  
+- `results/plots/` → visualization outputs  
+- `results/` → processed CellChat objects  
 
 ---
 
 ## ⚠️ Notes
-- Raw data not included  
-- Mouse database used (CellChatDB.mouse)  
-- Sequential execution used due to memory limits  
+
+- Raw data is not included in this repository  
+- Analysis uses `CellChatDB.mouse`  
+- Sequential execution used to avoid memory issues  
 
 ---
 
