@@ -1,25 +1,27 @@
-# CellChat Analysis: sTREM2 vs EGFP
+# CellChat Analysis of Cell–Cell Communication
 
 ## 🧠 Project Overview
-This project investigates how **sTREM2 overexpression alters cell–cell communication** in liver using single-cell RNA-seq data and the CellChat framework.
+This project investigates how **cell–cell communication networks change between two biological conditions** using single-cell RNA-seq data and the CellChat framework.
 
-We compare:
-- **Control (EGFP)**
-- **sTREM2 overexpression**
+The analysis focuses on:
+- Global communication patterns  
+- Pathway-level signaling changes  
+- Ligand–receptor interactions  
+- Network rewiring across conditions  
 
 ---
 
 ## 🔬 Biological Questions
-- Does sTREM2 change overall communication strength?
+- How does intercellular communication differ between conditions?
 - Which cell types are most affected?
-- Which signaling pathways are altered?
-- Are these changes due to signal strength or **network rewiring**?
+- Which signaling pathways change the most?
+- Are differences due to signal strength or **network rewiring**?
 
 ---
 
 ## ⚙️ Analysis Workflow
 1. Construct CellChat objects for each condition  
-2. Infer cell–cell communication networks  
+2. Infer communication probabilities  
 3. Compare interaction number and strength  
 4. Identify differential signaling pathways  
 5. Perform pathway-level analysis  
@@ -35,59 +37,59 @@ We compare:
 ## 1️⃣ Global Communication Changes
 ![Interaction](results/01_interaction_count_vs_strength.png)
 
-sTREM2 shows a clear **reduction in both the number and strength of interactions**, indicating global suppression of cell–cell communication.
+There is a clear difference in both the **number and strength of interactions** between the two conditions, indicating global changes in communication.
 
 ---
 
 ## 2️⃣ Differential Interaction Network
 ![Diff Network](results/03b_diff_interactions_strength.png)
 
-Communication between cell types is broadly reduced and reorganized in sTREM2, with many interactions lost.
+Cell–cell communication is broadly reorganized, with multiple interactions either strengthened or reduced.
 
 ---
 
 ## 3️⃣ Systematic Interaction Changes (Heatmap)
 ![Heatmap](results/04_differential_heatmaps.png)
 
-The heatmap highlights widespread decreases in signaling across multiple sender–receiver pairs.
+The heatmap summarizes interaction changes across all cell-type pairs, highlighting widespread differences in signaling patterns.
 
 ---
 
 ## 4️⃣ Pathway-Level Changes
 ![Pathway](results/05_rankNet_stacked.png)
 
-Most signaling pathways show reduced activity in sTREM2, indicating a global shift in pathway usage.
+Signaling pathways show condition-dependent activity, indicating shifts in pathway usage and communication dynamics.
 
 ---
 
-## 5️⃣ Network Rewiring (Most Important Result)
+## 5️⃣ Network Rewiring (Key Result)
 ![Embedding](results/14_pairwise_embedding.png)
 
-Pathway embedding reveals that several pathways change their cellular communication patterns, demonstrating **true network rewiring**, not just reduced signaling.
+Pathway embedding demonstrates that several signaling pathways change their cellular interaction patterns, indicating **network rewiring**, not just changes in intensity.
 
 ---
 
 ## 6️⃣ Condition-Specific Pathways
 ![RankSimilarity](results/16_rankSimilarity.png)
 
-Top-ranked pathways show the strongest differences between control and sTREM2 and represent the most biologically relevant signaling changes.
+Top-ranked pathways show the strongest differences between conditions and represent the most biologically relevant signaling changes.
 
 ---
 
-## 7️⃣ Example Mechanistic Interaction (HSC → Hepatocyte)
+## 7️⃣ Example Ligand–Receptor Interaction
 ![Chord](results/13_chord_HSC_Hepatocyte.png)
 
-Detailed ligand–receptor analysis highlights how specific signaling interactions between HSC and hepatocytes are altered under sTREM2.
+Detailed ligand–receptor analysis highlights how specific signaling interactions between selected cell types differ between conditions.
 
 ---
 
-# 🧬 Key Biological Insights
+# 🧬 Key Insights
 
-- Global reduction in intercellular communication in sTREM2  
-- Loss of signaling diversity across pathways  
-- Shift toward **dominant signaling axes**  
-- Evidence of **network rewiring**, not just intensity changes  
-- Altered ligand–receptor interactions driving communication differences  
+- Global differences in intercellular communication  
+- Changes in signaling strength across pathways  
+- Altered communication patterns between cell types  
+- Evidence of **network-level rewiring**  
+- Identification of condition-specific signaling programs  
 
 ---
 
@@ -101,8 +103,8 @@ Detailed ligand–receptor analysis highlights how specific signaling interactio
 # ⚠️ Notes
 
 - Raw data is not included  
-- Analysis performed using `CellChatDB.mouse`  
-- Sequential execution used to avoid memory issues  
+- Analysis uses the CellChat framework  
+- Sequential execution is used to avoid memory issues  
 
 ---
 
